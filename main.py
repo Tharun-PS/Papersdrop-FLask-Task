@@ -55,7 +55,7 @@ def view():
         query['bid'] = int(request.form['id'])
     if request.form['name'] != "":
         query['name'] = request.form['name']
-    if request.form['author']:
+    if request.form['author'] != "":
         query['author'] = request.form['author']
     if request.form['date'] != "":
         query['published'] = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
@@ -73,7 +73,7 @@ def delete():
         query['bid'] = int(request.form['id'])
     if request.form['name'] != "":
         query['name'] = request.form['name']
-    if request.form['author']:
+    if request.form['author'] != "":
         query['author'] = request.form['author']
     if request.form['date'] != "":
         query['published'] = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
@@ -88,22 +88,20 @@ def update():
         f_query['bid'] = int(request.form['fid'])
     if request.form['fname'] != "":
         f_query['name'] = request.form['fname']
-    if request.form['fauthor']:
+    if request.form['fauthor'] != "":
         f_query['author'] = request.form['fauthor']
     if request.form['fdate'] != "":
         f_query['published'] = datetime.datetime.strptime(request.form['fdate'], "%Y-%m-%d")
-    print(f_query)
 
     r_query = {}
     if request.form['rid'] != "":
         r_query['bid'] = int(request.form['rid'])
     if request.form['rname'] != "":
         r_query['name'] = request.form['rname']
-    if request.form['rauthor']:
+    if request.form['rauthor'] != "":
         r_query['author'] = request.form['rauthor']
     if request.form['rdate'] != "":
         r_query['published'] = datetime.datetime.strptime(request.form['rdate'], "%Y-%m-%d")
-    print(r_query)
 
     book = Book.objects(__raw__=f_query).update(__raw__={"$set": r_query})
     print(book)
