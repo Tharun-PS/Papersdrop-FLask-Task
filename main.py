@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import datetime
 from dotenv import load_dotenv
 import os
+import json
 
 app = Flask(__name__)
 load_dotenv()
@@ -12,11 +13,9 @@ load_dotenv()
 db_username = os.getenv("db_username")
 db_password = os.getenv("db_password")
 dbname = os.getenv("dbname")
-print(db_username, db_password, dbname)
 
 connect(
     host=f"mongodb+srv://{db_username}:{db_password}@cluster0.iiowz.mongodb.net/{dbname}?retryWrites=true&w=majority"
-    # host="mongodb+srv://tharun:tharun123@cluster0.iiowz.mongodb.net/Book?retryWrites=true&w=majority"
 )
 
 
@@ -27,9 +26,8 @@ def main_page():
 
 @app.route("/books")
 def book():
-    lst = Book.objects().to_json()
-    print(lst)
-    return render_template("base.html", AllBooks=(Book.objects().to_json()))
+    lst = json.loads(Book.objects().to_json())
+    return render_template("base.html", AllBooks=json.loads(Book.objects().to_json()))
 
 
 @app.route("/edit", methods=['GET'])
@@ -43,7 +41,7 @@ def add():
         book = Book(bid=request.form['id'], name=request.form['name'], author=request.form['author'],
                     published=request.form['date'])
         book.save()
-        return render_template("main.html")
+        return "No of Books Added : " + str(book)
     except errors.NotUniqueError as e:
         print("Book id already exist")
         return render_template("main.html")
