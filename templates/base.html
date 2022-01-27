@@ -84,9 +84,9 @@
 	            <td>{{ book['bid'] }}</td>
 	            <td>{{ book['name'] }}</td>
 	            <td>{{ book['author'] }}</td>
-	            <td>{{ book['published']['date'] }}</td>
+	            <td>{{ book['published']['$date'] }}</td>
 	            <td>
-	                <form action="/removeAlert?index={{book['bid']}}" method="post">
+	                <form action="/delete_with_id?id={{book['bid']}}" method="post">
 	                    <button class="btn btn-primary btn-large">Remove</button>
 	                </form>
 	            </td>

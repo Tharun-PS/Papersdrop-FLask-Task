@@ -27,7 +27,9 @@ def main_page():
 @app.route("/books")
 def book():
     lst = json.loads(Book.objects().to_json())
-    return render_template("base.html", AllBooks=json.loads(Book.objects().to_json()))
+    for i in lst:
+        i['published']['$date'] = datetime.datetime.fromtimestamp(int(i['published']['$date']) / 1000)
+    return render_template("base.html", AllBooks=lst)
 
 
 @app.route("/edit", methods=['GET'])
@@ -41,10 +43,9 @@ def add():
         book = Book(bid=request.form['id'], name=request.form['name'], author=request.form['author'],
                     published=request.form['date'])
         book.save()
-        return "No of Books Added : " + str(book)
+        return "Added record Successfully"
     except errors.NotUniqueError as e:
-        print("Book id already exist")
-        return render_template("main.html")
+        return "Book id already exist\n\n"+str(e)
 
 
 @app.route('/view', methods=["POST"])
@@ -59,7 +60,10 @@ def view():
     if request.form['date'] != "":
         query['published'] = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
     books = Book.objects(__raw__=query)
-    return books.to_json()
+    lst = json.loads(books.to_json())
+    for i in lst:
+        i['published']['$date'] = datetime.datetime.fromtimestamp(int(i['published']['$date'])/1000)
+    return lst[0]
 
 
 @app.route('/delete', methods=['GET', 'POST'])
@@ -72,7 +76,7 @@ def delete():
     if request.form['author']:
         query['author'] = request.form['author']
     if request.form['date'] != "":
-        query['published'] = request.form['date']
+        query['published'] = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d")
     book = Book.objects(__raw__=query).delete()
     return "No of deleted records : "+str(book)
 
@@ -104,6 +108,13 @@ def update():
     book = Book.objects(__raw__=f_query).update(__raw__={"$set": r_query})
     print(book)
     return "No of updated records : " + str(book)
+
+
+@app.route('/delete_with_id', methods=['POST'])
+def delete_with_id():
+    b_id = int(request.args['id'])
+    Book.objects(bid=b_id).delete()
+    return redirect(url_for('book'))
 
 
 if __name__ == '__main__':
