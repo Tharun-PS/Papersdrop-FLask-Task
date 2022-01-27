@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <title>Mongo DB</title>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <style>
+            header{
+                text-align:center;
+                border-bottom: 5px ridge #aaa;
+                background: blue;
+                color: white;
+                padding:0;
+                margin:0;
+            }
+            body{
+                padding:0;
+                margin:0;
+                background: orange;
+                text-align: center;
+            }
+            .form{
+                display:inline-block;
+                max-width:25%;
+            }
+            input[type=text],input[type=date]{
+                width: 170px;
+            }
+            .btn { 
+                display: inline-block; 
+                *display: inline; 
+                *zoom: 1; 
+                padding: 4px 10px 4px; 
+                margin-bottom: 0; 
+                font-size: 13px;
+                line-height: 18px; 
+                color: #333333; 
+                text-align: center;
+                text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+                vertical-align: middle; 
+                background-color: #f5f5f5; 
+                background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6); 
+                background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6); 
+                background-image: -webkit-gradient(linear, 0, 0 100%, from(#ffffff), to(#e6e6e6)); 
+                background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+                background-image: -o-linear-gradient(top, #ffffff, #e6e6e6); 
+                background-image: linear-gradient(top, #ffffff, #e6e6e6); 
+                background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0); 
+                border-color: #e6e6e6 #e6e6e6 #e6e6e6;
+                border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); 
+                border: 1px solid #e6e6e6; 
+                -webkit-border-radius: 4px; 
+                -moz-border-radius: 4px; 
+                border-radius: 4px; 
+                -webkit-box-shadow: inset 0 1px 0 rgba(255,255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); 
+                -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); 
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+                cursor: pointer; 
+                *margin-left: .3em; 
+            }
+
+        </style>
+    </head>
+    <body>
+        <header><br><h1>MONGO DB FROM MONGOENGINE</h1></header><br><br>
+        <div class="form">
+            <h1>ADD</h1>
+            <form action="/add" method="POST" name="add">
+                <label>Book id*</label><br>
+                <input type="text" name="id" required><br><br>
+                <label>Name*</label><br>
+                <input type="text" name="name" required><br><br>
+                <label>Author*</label><br>
+                <input type="text" name="author" required><br><br>
+                <label>Published*</label><br>
+                <input type="date" name="date" required><br><br><br>
+                <input class="btn" id="add" type="submit" value="Add record">
+            </form>
+        </div>
+
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+
+        <div class="form">
+            <h1>VIEW</h1>
+            <form action="/view" method="POST">
+                <label>Book id</label><br>
+                <input type="text" name="id"><br><br>
+                <label>Name</label><br>
+                <input type="text" name="name"><br><br>
+                <label>Author</label><br>
+                <input type="text" name="author"><br><br>
+                <label>Published</label><br>
+                <input type="date" name="date"><br><br><br>
+                <input class="btn" type="submit" value="View record">
+            </form>
+        </div>
+
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+
+        <div class="form">
+            <h1>UPDATE</h1>
+            <form action="/update" method="POST">
+                <div class="form">
+                    <label>Book id</label><br>
+                    <input type="text" name="fid" placeholder="find id">
+                    <br><br>
+                    <label>Name</label><br>
+                    <input type="text" name="fname" placeholder="find name">
+                    <br><br>
+                    <label>Author</label><br>
+                    <input type="text" name="fauthor" placeholder="find author">
+                    <br><br>
+                    <label>Published</label><br>
+                    <input type="date" name="fdate" placeholder="find date">
+                    <br><br><br>
+                </div>
+                &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+                &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+                &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+                <div class="form">
+                    <label>Book id</label><br>
+                    <input type="text" name="rid" placeholder="replace id">
+                    <br><br>
+                    <label>Name</label><br>
+                    <input type="text" name="rname" placeholder="replace name">
+                    <br><br>
+                    <label>Author</label><br>
+                    <input type="text" name="rauthor" placeholder="replace author"><br><br>
+                    <label>Published</label><br>
+                    <input type="date" name="rdate" placeholder="replace date">
+                    <br><br><br>
+                </div>
+                <input class="btn" type="submit" value="Update record">
+            </form>
+        </div>
+
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+        &emsp13;&emsp13;&emsp13;&emsp13;&emsp13;&emsp13;
+
+        <div class="form">
+            <h1>DELETE</h1>
+            <form action="/delete" method="POST">
+                <label>Book id</label><br>
+                <input type="text" name="id"><br><br>
+                <label>Name</label><br>
+                <input type="text" name="name"><br><br>
+                <label>Author</label><br>
+                <input type="text" name="author"><br><br>
+                <label>Published</label><br>
+                <input type="date" name="date" size="50"><br><br><br>
+                <input class="btn" type="submit" value="Delete record">
+            </form>
+        </div>
+        <input type="text" id="msg" style="display: none;" value={{msg}}>
+        <!--<script>
+            /*jQuery(document).ready(function ($) {
+                $(document).on('frmFormErrors', function( event, form, response ){
+                  alert("errors");
+                });
+            });*/
+            /*var msg = document.getElementById("msg").value;
+            document.getElementById("add").addEventListener("click",()=>{
+                if(msg == "success"){
+                    await sleep(2000);
+                    document.getElementById("msg").value = ""
+                    swal('Book Added successfully!','Chill,Look to other books!','success')
+                } else{
+                    swal('Oops!','Book id already exists!','error').then(() => {
+                    }); 
+                }        
+            })*/
+        </script>-->
+
+    </body>
+</html>
